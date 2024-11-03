@@ -1,0 +1,114 @@
+/*폰트 추가해야함*/
+body {
+  font-family: 'Sree Krushnadevaraya';
+  background-color: #ffffff;
+}
+
+.login-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.login-container {
+  width: 100%;
+  max-width: 400px;
+}
+
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 3.5rem;
+}
+
+.logo h1 {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin: 0 0.5rem;
+}
+
+/*아이콘 추가해야함*/
+.logo-picture, .logo-talk {
+  width: 24px;
+  height: 24px;
+  background-color: #000;
+}
+
+.login-form-container {
+  padding: 1.5rem;
+  margin-bottom: 1rem;
+  border: 2px solid #325487;
+  border-radius: 8px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0rem; 
+}
+
+.input-field {
+  height: 48px;
+  padding: 0 1rem;
+  border: 1px solid #879BB8;
+  border-radius: 4px;
+  font-size: 0.8rem;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #3B5998;
+}
+
+.login-button {
+  height: 48px;
+  background-color: #325487;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1rem; 
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #324b81;
+}
+
+.links-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.875rem;
+  color: #8B8B8B;
+}
+
+.link-text {
+  color: #8B8B8B;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.link-text:hover {
+  color: #3B5998;
+  text-decoration: underline;
+}
+
+.separator {
+  color: #e0e0e0;
+}
