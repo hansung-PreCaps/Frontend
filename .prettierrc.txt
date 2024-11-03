@@ -1,0 +1,8 @@
+{
+  "printWidth": 100, // 최대 100중
+  "semi": true, // 세미콜론 허용
+  "singleQuote": false, // 큰따옴표 사용
+  "tabWidth": 2, //탭의 크기 2
+  "trailingComma": "es5",
+  "arrowParens": "always"
+}
