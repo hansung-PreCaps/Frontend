@@ -37,10 +37,19 @@ body {
 }
 
 /*아이콘 추가해야함*/
-.logo-picture, .logo-talk {
+.logo-picture{
   width: 24px;
   height: 24px;
-  background-color: #000;
+  background-image: url('./Group.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.logo-talk{
+  width: 24px;
+  height: 24px;
+  background-image: url('./bx_chat.png');
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .login-form-container {

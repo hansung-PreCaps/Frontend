@@ -1,0 +1,785 @@
+button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 14px;
+  }
+  
+  .title{
+  /* Pic&Talk */
+  
+  position: absolute;
+  width: 212px;
+  height: 124px;
+  left: 109px;
+  top: -45px;
+  
+  font-family: 'Sree Krushnadevaraya';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 60px;
+  line-height: 124px;
+  /* identical to box height */
+  text-align: center;
+  
+  color: #000000;
+  
+  
+  
+  
+  }
+  
+  header {
+  /* Rectangle 166 */
+  
+  position: absolute;
+  width: 100%;
+  height: 133px;
+  left: 0px;
+  top: 0px;
+  
+  background: rgba(14, 54, 114, 0.15);
+  
+  }
+  
+  .h1-send {
+  /* 문자 전송 */
+  
+  /* 문자 전송 */
+  
+  position: absolute;
+  width: 153px;
+  height: 42px;
+  left: 566px;
+  top: 15px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: 42px;
+  
+  color: #000000;
+  
+  
+  
+    
+    
+  }
+  
+  .h1-chatbot {
+  /* 챗봇 */
+  
+  position: absolute;
+  width: 70px;
+  height: 42px;
+  left: 835px;
+  top: 15px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: 42px;
+  
+  color: #000000;
+  
+  
+  
+  }
+  .line{
+    /* Line 3 */
+    
+    position: absolute;
+    width: 153px;
+    height: 0px;
+    left: 565px;
+    top: 90px;
+    
+    border: 1px solid #000000;
+    
+    
+    }
+  
+  .h2-message {
+  
+  position: absolute;
+  width: 180px;
+  height: 36px;
+  left: 104px;
+  top: 157px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 30px;
+  
+  color: #313131;
+  
+  
+  }
+  
+  .h2-send {
+  
+  position: absolute;
+  width: 150px;
+  height: 36px;
+  left: 822px;
+  top: 157px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 30px;
+  
+  color: #313131;
+  }
+  
+  .message-background{
+    box-sizing: border-box;
+  
+  position: absolute;
+  width: 661px;
+  height: 953px;
+  left: 86px;
+  top: 220px;
+  
+  border: 2px solid #424242;
+  border-radius: 8px;
+  
+  
+  
+  }
+  
+  .send-background{
+    /* 발신 설정 배경 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 829px;
+  height: 953px;
+  left: 803px;
+  top: 220px;
+  
+  border: 2px solid #424242;
+  border-radius: 8px;
+  
+    
+  }
+  
+  .input-title{
+    /* Rectangle 17 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 591px;
+  height: 80px;
+  left: 35px;
+  top: 30px;
+  font-size: 25px;
+  
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  }
+  
+  .input-content{
+    /* Rectangle 18 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 591px;
+  height: 328px;
+  left: 35px;
+  top: 190px;
+  font-size: 25px;
+  
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  }
+  
+  .tem-save{
+    /* Rectangle 53 */
+  
+  position: absolute;
+  width: 185px;
+  height: 50px;
+  left: 440px;
+  top: 540px;
+  
+  background: rgba(14, 54, 114, 0.5);
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  }
+  
+  .image-addition{
+    /* 이미지 추가 */
+  
+  position: absolute;
+  width: 134px;
+  height: 30px;
+  left: 35px;
+  top: 595px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 30px;
+  
+  color: #2A2A2A;
+  
+  
+  }
+  
+  .image-plus{
+    /* Rectangle 54 */
+  
+  position: absolute;
+  width: 185px;
+  height: 231px;
+  left: 35px;
+  top: 30px;
+  color:black;
+  
+  background: rgba(195, 205, 220, 0.5);
+  border-radius: 3px;
+  
+  }
+  .image-background{
+    /* Rectangle 22 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 591px;
+  height: 298px;
+  left: 35px;
+  top: 635px;
+  
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  }
+  
+  .graybutton{
+    /* Rectangle 55 */
+  
+  position: absolute;
+  width: 134px;
+  height: 41px;
+  left: 35px;
+  top: 130px;
+  
+  background: #9F9F9F;
+  border-radius: 5px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  }
+  .graybutton2{
+    /* Rectangle 55 */
+  
+  position: absolute;
+  width: 134px;
+  height: 41px;
+  left: 200px;
+  top: 130px;
+  
+  background: #9F9F9F;
+  border-radius: 5px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  }
+  
+  .outgoing-number{
+  
+  /* Rectangle 24 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 538px;
+  height: 62px;
+  left: 50px;
+  top: 20px;
+  font-size: 25px;
+  
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  
+  }
+  
+  .outgoing-button{
+  /* Rectangle 25 */
+  
+  position: absolute;
+  width: 176px;
+  height: 62px;
+  left: 608px;
+  top: 20px;
+  
+  background: rgba(14, 54, 114, 0.5);
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  
+  }
+  
+  .reception{
+    /* 수신번호 입력 */
+  
+  position: absolute;
+  width: 159px;
+  height: 30px;
+  left: 50px;
+  top: 102px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 30px;
+  
+  color: #2A2A2A;
+  
+  
+  }
+  
+  .address{
+  /* Rectangle 57 */
+  
+  position: absolute;
+  width: 133px;
+  height: 41px;
+  left: 50px;
+  top: 152px;
+  
+  background: #9F9F9F;
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  }
+  
+  .recent{
+  /* Rectangle 58 */
+  
+  position: absolute;
+  width: 133px;
+  height: 41px;
+  left: 203px;
+  top: 152px;
+  
+  background: #9F9F9F;
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  }
+  
+  .numaddition-background{
+  /* Rectangle 27 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 318px;
+  height: 391px;
+  left: 50px;
+  top: 203px;
+  
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  }
+  
+  .numaddition-inner{
+    /* Rectangle 59 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 267px;
+  height: 228px;
+  left: 0px;
+  top: 0px;
+  
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  }
+  
+  .numaddition-button{
+    /* Rectangle 61 */
+  
+  position: absolute;
+  width: 267px;
+  height: 43px;
+  left: 15px;
+  top: 330px;
+  
+  background: rgba(14, 54, 114, 0.5);
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  
+  }
+  
+  .sending-setting{
+  /* 발송 설정 */
+  
+  position: absolute;
+  width: 109px;
+  height: 30px;
+  left: 50px;
+  top: 604px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: 30px;
+  
+  color: #2A2A2A;
+  
+  
+  
+  }
+  
+  .immed-send{
+  /* Rectangle 66 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 252px;
+  height: 71px;
+  left: 50px;
+  top: 654px;
+  
+  background-color: #FFFFFF;
+  color: black;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  
+  }
+  
+  .reser-send{
+  /* Rectangle 67 */
+  
+  position: absolute;
+  width: 252px;
+  height: 71px;
+  left: 322px;
+  top: 654px;
+  
+  background: rgba(14, 54, 114, 0.5);
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  }
+  
+  .date{
+    /* Rectangle 167 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 210px;
+  height: 48px;
+  left: 50px;
+  top: 745px;
+  font-size: 20px;
+  
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  }
+  
+  .hour{
+    /* Rectangle 168 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 130px;
+  height: 48px;
+  left: 280px;
+  top: 745px;
+  font-size: 20px;
+  
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  }
+  
+  .minute{
+    /* Rectangle 169 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 143px;
+  height: 48px;
+  left: 430px;
+  top: 745px;
+  font-size: 20px;
+  
+  background: #FFFFFF;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  }
+  
+  .sending{
+    /* Rectangle 68 */
+  
+  position: absolute;
+  width: 328px;
+  height: 72px;
+  left: 50px;
+  top: 813px;
+  
+  background: rgba(14, 54, 114, 0.5);
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 25px;
+  line-height: 30px;
+  
+  }
+  
+  .preview{
+    /* Rectangle 69 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 141px;
+  height: 72px;
+  left: 408px;
+  top: 813px;
+  
+  background-color: #FFFFFF;
+  color: black;
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  
+  }
+  
+  
+  .receiver{
+    /* 받는 사람 */
+  
+  position: absolute;
+  width: 88px;
+  height: 24px;
+  left: 388px;
+  top: 215px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  
+  color: #2A2A2A;
+  
+  
+  }
+  
+  .all-remove{
+    /* Rectangle 63 */
+  
+  position: absolute;
+  width: 91px;
+  height: 30px;
+  left: 685px;
+  top: 215px;
+  
+  background: rgba(14, 54, 114, 0.5);
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  }
+  
+  .receiver-background{
+    /* Rectangle 62 */
+  
+  box-sizing: border-box;
+  
+  position: absolute;
+  width: 389px;
+  height: 324px;
+  left: 388px;
+  top: 255px;
+  
+  border: 1px solid #000000;
+  border-radius: 3px;
+  
+  }
+  
+  .receiver-N{
+    /* 전체 N명 */
+  
+  position: absolute;
+  width: 83px;
+  height: 24px;
+  left: 20px;
+  top: 280px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  
+  color: #2A2A2A;
+  
+  
+  }
+  
+  .address-save{
+    /* Rectangle 64 */
+  
+  position: absolute;
+  width: 105px;
+  height: 30px;
+  left: 260px;
+  top: 280px;
+  
+  background: #9F9F9F;
+  border-radius: 3px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 16px;
+  }
+  
+  .myname{
+    /* PicFlow님 */
+  
+  position: absolute;
+  width: 137px;
+  height: 36px;
+  left: 1730px;
+  top: 20px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 36px;
+  
+  color: #000000;
+  
+  
+  }
+  
+  .mypage{
+    /* 마이페이지 ㅣ 로그아웃 */
+  
+  position: absolute;
+  width: 150px;
+  height: 18px;
+  left: 1730px;
+  top: 70px;
+  
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 18px;
+  
+  color: #000000;
+  
+  
+  }
+  
+  .Group{
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    left: 68px;
+    top: 25px;
+    
+  
+  }
+  
+  .Bx_chat{
+    /* bx:chat */
+  
+  position: absolute;
+  width: 40px;
+  height: 38px;
+  left: 331px;
+  top: 79px;
+  
+  
+  }

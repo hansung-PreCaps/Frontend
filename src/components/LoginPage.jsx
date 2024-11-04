@@ -1,7 +1,14 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 
 export default function LoginPage() {
+  const navigate = useNavigate(); // useNavigate 훅 선언
+
+  const handleButtonClick = () => {
+    navigate('/messagesending'); // 버튼 클릭 시 MessagesendingPage로 이동
+  };
+
   return (
     <div className="login-page">
       <div className="login-container">
@@ -28,6 +35,7 @@ export default function LoginPage() {
             <button 
               className="login-button"
               type="submit"
+              onClick={handleButtonClick}
             >
               로그인
             </button>
