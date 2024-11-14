@@ -4,7 +4,7 @@ import './MainPage.css';
 import Group from './Group.png';
 import Bx_chat from './bx_chat.png';
 import PreviewModal from './PreviewModal';
-
+import AIModal from './AIModal';
 import { useNavigate } from 'react-router-dom'; // useNavigate 가져오기
 
 function MainPage() {
