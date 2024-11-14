@@ -2,14 +2,16 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import JoinPage from './components/JoinPage';
 import LoginPage from './components/LoginPage';
-import MessagesendingPage from "./components/MessagesendingPage";
+import MainPage from "./components/MainPage";
+import ChatbotPage from './components/ChatbotPage';
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LoginPage />} />
         <Route path="/signup" element={<JoinPage />} />
-        <Route path="/messagesending" element={<MessagesendingPage />} />
+        <Route path="/mainpage" element={<MainPage />} />
+        <Route path="/chatbotpage" element={<ChatbotPage />} />
       </Routes>
     </Router>
   );
