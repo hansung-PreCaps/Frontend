@@ -32,8 +32,7 @@ jobs:
           #REACT_APP_OAUTH2_REDIRECT_URI: ${{ secrets.REACT_APP_OAUTH2_REDIRECT_URI }}
         run: |
           yarn run build
-          ls -la
-          ls -la build
+          ls -la dist
         
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
@@ -47,7 +46,7 @@ jobs:
           aws s3 cp \
             --recursive \
             --region ap-northeast-2 \
-            build s3://enble.site
+            dist s3://enble.site
             
       - name: Invalidate files
         run: |
