@@ -30,7 +30,10 @@ jobs:
           #REACT_APP_SERVER: ${{ secrets.REACT_APP_SERVER }}
           #REACT_APP_OCR_SERVER: ${{ secrets.REACT_APP_OCR_SERVER }}
           #REACT_APP_OAUTH2_REDIRECT_URI: ${{ secrets.REACT_APP_OAUTH2_REDIRECT_URI }}
-        run: yarn run build
+        run: |
+          yarn run build
+          ls -la
+          ls -la build
         
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
