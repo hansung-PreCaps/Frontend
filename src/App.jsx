@@ -4,6 +4,7 @@ import JoinPage from './components/JoinPage';
 import LoginPage from './components/LoginPage';
 import MainPage from "./components/MainPage";
 import ChatbotPage from './components/ChatbotPage';
+import ImagePage from './components/ImagePage';
 function App() {
   return (
     <Router>
@@ -12,6 +13,7 @@ function App() {
         <Route path="/signup" element={<JoinPage />} />
         <Route path="/mainpage" element={<MainPage />} />
         <Route path="/chatbotpage" element={<ChatbotPage />} />
+        <Route path="/imagepage" element={<ImagePage />} />
       </Routes>
     </Router>
   );
