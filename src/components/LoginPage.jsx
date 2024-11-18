@@ -6,7 +6,7 @@ export default function LoginPage() {
   const navigate = useNavigate(); // useNavigate 훅 선언
 
   const handleButtonClick = () => {
-    navigate('/messagesending'); // 버튼 클릭 시 MessagesendingPage로 이동
+    navigate('/mainpage'); // 버튼 클릭 시 MessagesendingPage로 이동
   };
 
   return (
