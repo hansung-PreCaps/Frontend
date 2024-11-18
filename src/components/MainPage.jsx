@@ -98,7 +98,7 @@ function MainPage() {
       <div>
         <label className="image-addition">이미지 추가</label>
         <div className="image-background">
-          <button className="image-plus">+</button>
+          <button className="image-plus" onClick={() => navigate('/imagepage')}>+</button>
         </div>
       </div>
     </div>
