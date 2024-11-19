@@ -1,7 +1,7 @@
 import React from 'react';
-import './TextStorageBox.css';
+import './StorageBox.css';
 
-function TextStorageBox() {
+function StorageBox() {
   return (
     <div className="text-storage-container">
       <h2 className="text-storage-title">문자 보관함</h2>
@@ -47,4 +47,4 @@ function TextStorageBox() {
   );
 }
 
-export default TextStorageBox;
+export default StorageBox;

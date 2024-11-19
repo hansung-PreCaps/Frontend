@@ -23,14 +23,14 @@ function ChatbotPage() {
          </div>
       
          <div className="center-section">
-           <h1 className="h1-send" onClick={() => navigate('/mainpage')}>문자 전송</h1>
-           <h1 className="h1-chatbot" onClick={() => navigate('/chatbotpage')}>챗봇</h1>
+           <h1 className="chatbot-h1-send" onClick={() => navigate('/mainpage')}>문자 전송</h1>
+           <h1 className="chatbot-h1-chatbot" onClick={() => navigate('/chatbotpage')}>챗봇</h1>
          </div>
     
          <div className="right-section">
             <h2 className="myname">PicFlow님</h2>
             <h2 className="mypage">
-               <span className="mypage-text">마이페이지</span>
+               <span className="mypage-text" onClick={() => navigate('/mypage')}>마이페이지</span>
                <span className="divider">|</span>
                <span className="logout">로그아웃</span>
             </h2>

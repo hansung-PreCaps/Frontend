@@ -1,0 +1,154 @@
+/* 주소록 컨테이너 */
+.address-container {
+    border: 1px solid #879bb8;
+    width: 1000px;
+    height: 600px;
+    padding: 20px;
+    margin-top: 20px;
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  
+  /* 타이틀 스타일 */
+  .address-title {
+    font-size: 28px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #879bb8;
+    padding-bottom: 10px;
+  }
+  
+  /* 첫 번째 버튼 그룹 */
+  .address-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+  }
+  
+  /* 두 번째 버튼 그룹 */
+  .address-tools {
+    display: flex;
+    align-items: left;
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  /* 공통 버튼 스타일 */
+
+  .tool-button {
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #879BB8;
+    border-radius: 0px;
+    height: 28px;
+    padding: 0 10px;
+    font-size: 12px;
+    cursor: pointer;
+  }
+
+  .add-button{
+    background-color: #d9d9d9;
+    color: #333;
+    border-radius: 2px;
+    height: 35px;
+    padding: 0 20px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+
+  .action-button {
+    background-color: #d9d9d9;
+    color: #333;
+    border-radius: 2px;
+    height: 35px;
+    padding: 0 10px;
+    font-size: 14px;
+    cursor: pointer;
+  }
+  
+  .action-button:hover,
+  .add-button:hover,
+  .tool-button:hover {
+    background-color: #c4c4c4;
+  }
+  
+  /* 검색창 스타일 */
+  .search-input {
+    flex: 1;
+    height: 35px;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    font-size: 14px;
+  }
+  
+  /* 주소록 리스트 */
+  .address-list {
+    flex: 1;
+    overflow-y: auto; /* 세로 스크롤 활성화 */
+    max-height: calc(100% - 150px); /* 리스트 높이 유연하게 조정 */
+    border: 1px solid #d9d9d9;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border-radius: 4px;
+  }
+  
+  /* 스크롤바 스타일 */
+  .address-list::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .address-list::-webkit-scrollbar-thumb {
+    background-color: #c4c4c4;
+    border-radius: 4px;
+  }
+  
+  .address-list::-webkit-scrollbar-thumb:hover {
+    background-color: #a6a6a6;
+  }
+  
+  .address-list::-webkit-scrollbar-track {
+    background-color: #f9f9f9;
+  }
+  
+  /* 그룹 스타일 */
+  .group {
+    margin-bottom: 20px;
+  }
+  
+  /* 연락처 리스트 */
+  .contacts {
+    margin-left: 20px;
+  }
+  
+  /* 개별 연락처 스타일 */
+  .contact {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #eaeaea;
+  }
+  
+  /* 체크박스 */
+  .contact-checkbox {
+    margin-right: 10px;
+  }
+  
+  /* 삭제 버튼 */
+  .delete-button {
+    background-color: #eaeaea;
+    color: #333;
+    border: none;
+    padding: 0px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .delete-button:hover {
+    background-color: #b6b6b6;
+  }
+  
