@@ -1,15 +1,18 @@
 import React, { useState } from 'react';
 import './MyPage.css';
 import ProfileImage from './profile.png';
-import MemberInfo from '../components/MemberInfo';
-import ReserveMessege from '../components/ReserveMessege';
-import Outbox from '../components/Outbox'; // 임시 보관함 컴포넌트
-import MyPageAddress from '../components/MyPageAddress'; // 내 주소록 컴포넌트
-import TextStorageBox from '../components/TextStorageBox'; // 문자 보관함 컴포넌트
+import MemberInfo from './MemberInfo';
+import ReserveMessege from './ReserveMessage';
+import Outbox from './Outbox';
+import MyPageAddress from './MyPageAddress';
+import StorageBox from './StorageBox';
+import { useNavigate } from 'react-router-dom'; // useNavigate 임포트
+import backImage from './back.png';
 
 function MyPage() {
   const [activeComponent, setActiveComponent] = useState('MemberInfo'); // 기본 활성 컴포넌트
   const [activeMenu, setActiveMenu] = useState('MemberInfo'); // 기본 활성 메뉴
+  const navigate = useNavigate(); // useNavigate 훅 사용
 
   const renderActiveComponent = () => {
     switch (activeComponent) {
@@ -17,11 +20,11 @@ function MyPage() {
         return <MemberInfo />;
       case 'ReserveMessege':
         return <ReserveMessege />;
-      case 'TempStorage':
+      case 'Outbox':
         return <Outbox />;
-      case 'MessageStorage':
-        return <TextStorageBox />;
-      case 'AddressBook':
+      case 'StorageBox':
+        return <StorageBox />;
+      case 'MyPageAddress':
         return <MyPageAddress />;
       default:
         return <MemberInfo />;
@@ -33,12 +36,18 @@ function MyPage() {
     setActiveComponent(menuName);
   };
 
+  const handleBackButtonClick = () => {
+    navigate('/mainpage'); // back-button 클릭 시 /mainpage로 이동
+  };
+
   return (
     <div>
       <nav className="navbar">
         <div className="navbar-logo">Pic&Talk</div>
         <h2 className="navbar-title">마이페이지</h2>
-        <button className="back-button"></button>
+        <button className="back-button" onClick={handleBackButtonClick}>
+        <img src={backImage} alt="Back" className="back-icon" />
+        </button>
       </nav>
       <div className="mypage-container">
         <div className="sidebar">
@@ -58,20 +67,20 @@ function MyPage() {
               예약 문자함
             </li>
             <li
-              className={activeMenu === 'MessageStorage' ? 'active' : ''}
-              onClick={() => handleMenuClick('MessageStorage')}
+              className={activeMenu === 'StorageBox' ? 'active' : ''}
+              onClick={() => handleMenuClick('StorageBox')}
             >
               문자 보관함
             </li>
             <li
-              className={activeMenu === 'TempStorage' ? 'active' : ''}
-              onClick={() => handleMenuClick('TempStorage')}
+              className={activeMenu === 'Outbox' ? 'active' : ''}
+              onClick={() => handleMenuClick('Outbox')}
             >
               임시 보관함
             </li>
             <li
-              className={activeMenu === 'AddressBook' ? 'active' : ''}
-              onClick={() => handleMenuClick('AddressBook')}
+              className={activeMenu === 'MyPageAddress' ? 'active' : ''}
+              onClick={() => handleMenuClick('MyPageAddress')}
             >
               내 주소록
             </li>

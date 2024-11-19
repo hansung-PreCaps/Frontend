@@ -1,12 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import './LoginPage.css';
 
 export default function LoginPage() {
-  const navigate = useNavigate(); // useNavigate 훅 선언
+  const navigate = useNavigate();
+  const [credentials, setCredentials] = useState({ id: '', password: '' });
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleButtonClick = () => {
-    navigate('/mainpage'); // 버튼 클릭 시 MessagesendingPage로 이동
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setCredentials({ ...credentials, [name]: value });
+  };
+
+  const handleLogin = async (e) => {
+    e.preventDefault(); // 기본 동작 방지
+
+    try {
+      const response = await axios.post('https://dev.enble.site/api/users/signin', {
+        username: credentials.id,
+        password: credentials.password,
+      });
+
+      if (response.status === 200) {
+        // 로그인 성공 시 토큰을 저장하고 페이지 이동
+        const { token } = response.data;
+        localStorage.setItem('token', token); // 로컬 스토리지에 토큰 저장
+        navigate('/mainpage');
+      }
+    } catch (error) {
+      // 오류 처리
+      setErrorMessage('로그인에 실패했습니다. 아이디와 비밀번호를 확인하세요.');
+      console.error('Login error:', error);
+    }
   };
 
   return (
@@ -17,30 +43,34 @@ export default function LoginPage() {
           <h1>Pic&Talk</h1>
           <span className="logo-talk"></span>
         </div>
-        
+
         <div className="login-form-container">
-          <form className="login-form">
+          <form className="login-form" onSubmit={handleLogin}>
             <div className="input-fields">
-              <input 
+              <input
                 type="text"
+                name="id"
                 placeholder="아이디"
                 className="input-field"
+                value={credentials.id}
+                onChange={handleInputChange}
               />
-              <input 
+              <input
                 type="password"
-                placeholder="비밀번호" 
+                name="password"
+                placeholder="비밀번호"
                 className="input-field"
+                value={credentials.password}
+                onChange={handleInputChange}
               />
             </div>
-            <button 
-              className="login-button"
-              type="submit"
-              onClick={handleButtonClick}
-            >
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+            <button className="login-button" type="submit">
               로그인
             </button>
           </form>
         </div>
+
         <div className="links-container">
           <a href="/forgot-password" className="link-text">
             비밀번호 찾기

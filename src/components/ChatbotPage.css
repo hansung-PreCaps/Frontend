@@ -55,7 +55,7 @@ header {
     margin-right: 45vw; 
   }
   
-  .h1-send, .h1-chatbot {
+  .chatbot-h1-send, .chatbot-h1-chatbot {
     font-family: 'Inter';
     font-weight: 400;
     font-size: 1.5vw;
@@ -63,10 +63,10 @@ header {
     cursor: pointer;
   }
   
-  .h1-send {
+  .chatbot-h1-chatbot {
     text-decoration: underline;
     text-underline-offset: 0.4em;
-    text-decoration-thickness: 1px; 
+    text-decoration-thickness: 1px;
   }
   
   .right-section {

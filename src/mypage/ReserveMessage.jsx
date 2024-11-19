@@ -1,5 +1,5 @@
 import React from 'react';
-import './ReserveMessege.css';
+import './ReserveMessage.css';
 
 function ReserveMessege() {
   return (
