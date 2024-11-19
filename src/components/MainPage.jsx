@@ -201,12 +201,10 @@ function MainPage() {
       </div>
     </div>
 
-    {/* 모달을 렌더링 */}
     {isPreviewOpen && <PreviewModal onClose={closePreview} />}
 
   </div>
 </main>
-
     </div>
   );
 }

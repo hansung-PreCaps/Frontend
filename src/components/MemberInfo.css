@@ -1,0 +1,90 @@
+.main-box {
+    border: 1px solid #879BB8;
+    width: 1000px;
+    height: 600px;
+    padding: 20px;
+    margin: 20px 0;
+  }
+  
+  .main-title {
+    font-size: 28px;
+    font-weight: normal;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #879BB8;
+    padding-bottom: 10px;
+  }
+  
+  .section-title {
+    font-size: 16px;
+    margin-bottom: 25px;
+    font-weight: normal;
+  }
+  
+  .info-box table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .info-box th,
+  .info-box td {
+    font-size: 13px;
+    text-align: left;
+    padding: 6px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .info-box th {
+    background-color: #E1E6ED;
+    font-weight: normal;
+    width: 200px;
+  }
+  
+  .info-box td {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .vertical-layout {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .info-box td input {
+    border: 1px solid #ccc; /*입력창 보더값*/
+    padding: 8px;
+    border-radius: 4px;
+  }
+  
+  .edit-button {
+    background-color: #d3d3d3;
+    color: #6D6D6D;
+    border: none;
+    cursor: pointer;
+    height: 25px;
+    padding: 0px 8px;
+    margin-top: -3px;
+    font-size: 11px;
+    border-radius: 4px;
+  }
+  
+  .nickname-hint {
+    font-size: 12px;
+    color: #555;
+    margin: 0;
+  }
+  
+  .button-group .cancel-button {
+    background-color: #ffffff ;
+    color: #666666 ;
+    border: 1px solid #879BB8 ; 
+    cursor: pointer;
+    height: 25px;
+    width: auto;
+    padding: 0px 8px;
+    margin-left: 10px;
+    font-size: 11px;
+    border-radius: 4px;
+  }
+  
