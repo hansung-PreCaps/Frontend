@@ -22,10 +22,19 @@ export default function LoginPage() {
         password: credentials.password,
       });
 
+      console.log('로그인 응답:', response.data); // 서버 응답 확인
+    
+
       if (response.status === 200) {
         // 로그인 성공 시 토큰을 저장하고 페이지 이동
-        const { token } = response.data;
-        localStorage.setItem('token', token); // 로컬 스토리지에 토큰 저장
+        const { result } = response.data; // 응답의 result에서 데이터 추출
+        const { access_token, refresh_token } = result;
+        if (!access_token || !refresh_token) {
+          throw new Error('액세스 토큰 또는 리프레시 토큰이 없습니다.');
+        }
+        localStorage.setItem('access_token', access_token);
+        localStorage.setItem('refresh_token', refresh_token);
+        console.log(access_token); // 서버 응답 확인
         navigate('/mainpage');
       }
     } catch (error) {
