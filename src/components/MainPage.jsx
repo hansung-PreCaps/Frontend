@@ -46,6 +46,43 @@ function MainPage() {
     setIsModalOpen(false);
   };
 
+  
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('https://dev.enble.site/api/users/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        body: JSON.stringify({}), // 본문이 필요한 경우 추가
+      });
+
+      let data = null;
+      if (response.ok) {
+        const contentType = response.headers.get('Content-Type');
+        if (contentType && contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          console.log('JSON 응답이 아닙니다. 빈 응답 처리.');
+        }
+      }
+  
+      console.log('Response Status:', response.status);
+      console.log('Response Data:', data);
+  
+      if (response.ok) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        navigate('/');
+      } else {
+        console.error('로그아웃 실패:', data.message || response.statusText);
+      }
+    } catch (error) {
+      console.error('로그아웃 요청 중 에러 발생:', error);
+    }
+  };
+  
   return (
     <div>
     <header>
