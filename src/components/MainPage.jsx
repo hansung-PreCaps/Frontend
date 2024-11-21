@@ -65,7 +65,7 @@ function MainPage() {
         <h2 className="mypage">
            <span className="mypage-text" onClick={() => navigate('/mypage')}>마이페이지</span>
            <span className="divider">|</span>
-           <span className="logout">로그아웃</span>
+           <span className="logout" onClick={handleLogout}>로그아웃</span>
         </h2>
      </div>
     </header>
