@@ -1,11 +1,13 @@
 // MainPage.jsx
 import React, { useState } from 'react';
+import { useEffect} from 'react';
 import './MainPage.css';
 import Group from './Group.png';
 import Bx_chat from './bx_chat.png';
 import PreviewModal from './PreviewModal';
 import AIModal from './AIModal';
 import { useNavigate } from 'react-router-dom'; // useNavigate 가져오기
+
 
 function MainPage() {
   const [subject, setSubject] = useState('');
@@ -18,6 +20,11 @@ function MainPage() {
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate(); // navigate 함수 생성
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem('access_token');
+    console.log('현재 Access Token:', accessToken);
+  }, []);
 
   const addReceiver = () => {
     if (receiver) {
@@ -44,6 +51,43 @@ function MainPage() {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
+  };
+
+  
+  const handleLogout = async () => {
+    try {
+      const response = await fetch('https://dev.enble.site/api/users/logout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        body: JSON.stringify({}), // 본문이 필요한 경우 추가
+      });
+
+      let data = null;
+      if (response.ok) {
+        const contentType = response.headers.get('Content-Type');
+        if (contentType && contentType.includes('application/json')) {
+          data = await response.json();
+        } else {
+          console.log('JSON 응답이 아닙니다. 빈 응답 처리.');
+        }
+      }
+  
+      console.log('Response Status:', response.status);
+      console.log('Response Data:', data);
+  
+      if (response.ok) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('refresh_token');
+        navigate('/');
+      } else {
+        console.error('로그아웃 실패:', data.message || response.statusText);
+      }
+    } catch (error) {
+      console.error('로그아웃 요청 중 에러 발생:', error);
+    }
   };
 
   
@@ -122,7 +166,7 @@ function MainPage() {
       />
       <div className="button-group">
       <button className="graybutton" onClick={handleOpenModal}>AI 자동 생성</button>
-      {isModalOpen && <AIModal onClose={handleCloseModal} />}
+      {isModalOpen && <AIModal onClose={handleCloseModal} setContent={setContent}/>}
          <button className="graybutton2">내 문자함</button>
       </div>
       <textarea
