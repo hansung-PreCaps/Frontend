@@ -1,7 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './StorageBox.css';
 
 function StorageBox() {
+  const [messages, setMessages] = useState([]); // 메시지 데이터를 저장하는 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 에러 상태
+
+  // API 요청
+    const fetchMessages = async () => {
+      try {
+        const response = await axios.get('https://dev.enble.site/api/messages', {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`, // 인증 토큰
+          },
+        });
+        if (response.data.isSuccess) {
+          console.log(response.data.result);
+          setMessages(response.data.result); // 메시지 데이터를 상태에 저장
+        } else {
+          setError('데이터를 가져오는데 실패했습니다.');
+        }
+      } catch (error) {
+        setError('데이터를 가져오는 중 에러가 발생했습니다.');
+      } finally {
+        setLoading(false); // 로딩 상태 종료
+      }
+    };
+
+    useEffect(() => {
+      fetchMessages();
+    }, []);
+    
+  const deleteMessage = async (messageId) => {
+    const confirmDelete = window.confirm('해당 문자를 삭제하시겠습니까?'); // 확인 창
+    if (!confirmDelete) return;
+
+    try {
+      const response = await axios.delete(`https://dev.enble.site/api/messages/${messageId}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`, // 인증 토큰
+        },
+      });
+      if (response.data.isSuccess) {
+        alert('문자가 성공적으로 삭제되었습니다.');
+        // 메시지 상태에서 삭제된 메시지를 제거
+        setMessages((prevMessages) =>
+          prevMessages.filter((message) => message.message_id !== messageId)
+        );
+        console.log(response.data.message);
+      } else {
+        alert('문자 삭제에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('문자 삭제 중 에러 발생:', error);
+      alert('문자 삭제 중 에러가 발생했습니다.');
+    }
+  };
+
+  if (loading) return <div>로딩 중...</div>; // 로딩 중 메시지
+  if (error) return <div>{error}</div>; // 에러 메시지
+
   return (
     <div className="text-storage-container">
       <h2 className="text-storage-title">문자 보관함</h2>
@@ -12,39 +71,29 @@ function StorageBox() {
         </button>
       </div>
       <div className="message-list">
-        {/* 첫 번째 메시지 */}
-        <div className="message-container">
-          <div className="message-header">
-            <span className="message-date">그룹1, +82 0-XXX-XXXX, +82 0-XXX-XXXX ...</span>
-            <i className="delete-icon">🗑</i>
-          </div>
-          <div className="message-card">
-            <p>특별한 기회를 놓치지 마세요! 지금 바로 50% 할인 행사에 참여하세요! 한정된 시간 동안 진행되는 이번 행사에서는 인기 상품을 절반 가격에 만나볼 수 있습니다.</p>
-            <p>- 모든 카테고리의 제품이 포함됩니다.</p>
-            <p>- 재고 소진 시까지 진행됩니다.</p>
-            <p>- 온라인 및 오프라인 매장에서 모두 적용됩니다.</p>
-            <p>지금 바로 쇼핑하러 가세요! 기회를 놓치지 마세요!</p>
-            <span className="message-date">24.10.05</span>
-          </div>
-        </div>
-        {/* 두 번째 메시지 */}
-        <div className="message-container">
-          <div className="message-header">
-            <span className="message-date">+82 0-XXX-XXXX, +82 0-XXX-XXXX ...</span>
-            <i className="delete-icon">🗑</i>
-          </div>
-          <div className="message-card">
-            <p>특별한 기회를 놓치지 마세요! 지금 바로 50% 할인 행사에 참여하세요! 한정된 시간 동안 진행되는 이번 행사에서는 인기 상품을 절반 가격에 만나볼 수 있습니다.</p>
-            <p>- 모든 카테고리의 제품이 포함됩니다.</p>
-            <p>- 재고 소진 시까지 진행됩니다.</p>
-            <p>- 온라인 및 오프라인 매장에서 모두 적용됩니다.</p>
-            <p>지금 바로 쇼핑하러 가세요! 기회를 놓치지 마세요!</p>
-            <span className="message-date">24.09.05</span>
-          </div>
-        </div>
+        {messages
+          .filter((message) => message.status === "SCHEDULED") // status가 SCHEDULED인 메시지만 필터링
+          .map((message) => (
+            <div key={message.message_id} className="message-container">
+              <div className="message-header">
+                <span className="message-date">{message.to}</span>
+                <i
+                  className="delete-icon"
+                  onClick={() => deleteMessage(message.message_id)}
+                >
+                  🗑
+                </i>
+              </div>
+              <div className="message-card">
+                <p>{message.content}</p>
+                <span className="message-date">
+                  {new Date(message.send_time).toLocaleDateString()} {/* 날짜 포맷 */}
+                </span>
+              </div>
+            </div>
+          ))}
       </div>
     </div>
   );
 }
-
 export default StorageBox;

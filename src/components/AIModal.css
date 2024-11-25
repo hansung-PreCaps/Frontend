@@ -126,3 +126,10 @@
     background: rgba(14, 54, 114, 0.2);
     width: 50%;
   }
+
+  .keyword-button{
+    background: rgba(14, 54, 114, 0.2);
+    border: none;
+    color:white;
+
+  }

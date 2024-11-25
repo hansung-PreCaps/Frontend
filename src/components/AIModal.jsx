@@ -95,7 +95,7 @@ const AIModal = ({ onClose, setContent }) => {
               {keywords.map((kw) => (
                 <span key={kw} className="keyword-item">
                   {kw}
-                  <button onClick={() => setKeywords(keywords.filter(k => k !== kw))} disabled={loading}>
+                  <button className="keyword-button" onClick={() => setKeywords(keywords.filter(k => k !== kw))} disabled={loading}>
                     X
                   </button>
                 </span>

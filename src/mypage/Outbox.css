@@ -5,6 +5,7 @@
     padding: 20px;
     margin: 20px 0;
     background-color: #ffffff;
+    overflow: hidden; /* 고정된 영역 유지 */
   }
   
   .outbox-title {
