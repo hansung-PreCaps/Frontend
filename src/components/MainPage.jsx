@@ -6,8 +6,9 @@ import Group from './Group.png';
 import Bx_chat from './bx_chat.png';
 import PreviewModal from './PreviewModal';
 import AIModal from './AIModal';
-import { useNavigate } from 'react-router-dom'; // useNavigate 가져오기
+import { useNavigate } from 'react-router-dom'; 
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 
 function MainPage() {
@@ -20,12 +21,26 @@ function MainPage() {
   const [sendDate, setSendDate] = useState(new Date());
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const navigate = useNavigate(); // navigate 함수 생성
+  const navigate = useNavigate(); 
+  const location = useLocation();
 
   useEffect(() => {
     const accessToken = localStorage.getItem('access_token');
     console.log('현재 Access Token:', accessToken);
   }, []);
+
+  useEffect(() => {
+    if (location.state?.content) {
+      const parts = location.state.content.split('\n\n');
+      setSubject(parts[0] || ''); 
+      setContent(parts.slice(1).join('\n\n') || '');
+    }
+
+    if (location.state?.to) {
+      setReceiver(location.state.to);
+      setReceiverList([location.state.to]);
+    }
+  }, [location.state]);
 
   const addReceiver = () => {
     if (receiver) {
@@ -63,7 +78,7 @@ function MainPage() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
-        body: JSON.stringify({}), // 본문이 필요한 경우 추가
+        body: JSON.stringify({}), 
       });
 
       let data = null;
@@ -106,17 +121,17 @@ function MainPage() {
   
       // API 요청 데이터 생성
       const requestData = {
-        account: 'your_account_name', // 계정 이름을 여기에 입력
+        account: 'your_account_name',
         message_type: 'LMS',
         content: `${subject}\n\n${content}`, // 제목과 내용을 포함한 문자열
         from: formattedFrom,
         duplicate_flag: 'N',
-        target_count: 1, // 임시로 1로 설정
+        target_count: 1,
         targets: [
           {
             to: formattedTo,
             change_word: {
-              var1: 'value1', // 필요하면g 값을 설정
+              var1: 'value1', 
               var2: 'value2',
               var3: '',
               var4: '',
@@ -124,10 +139,10 @@ function MainPage() {
               var6: '',
               var7: '',
             },
-            name: 'receiver_name', // 수신자 이름 (필요시 추가)
+            name: 'receiver_name', 
           },
         ],
-        ref_key: 'ref_key_example', // 참조 키
+        ref_key: 'ref_key_example', 
       };
   
       console.log('Request Data:', JSON.stringify(requestData, null, 2));
@@ -140,7 +155,6 @@ function MainPage() {
         },
       });
   
-      // 성공 메시지 출력
       console.log('Response Data:', response.data);
       alert('메시지가 성공적으로 발송되었습니다!');
     } catch (error) {
@@ -148,6 +162,40 @@ function MainPage() {
       alert('메시지 발송에 실패했습니다. 다시 시도해주세요.');
     }
   };
+  
+  const handleTempSave = async () => {
+    const confirmSave = window.confirm('메시지를 임시 저장하시겠습니까?');
+    if (!confirmSave) return;
+
+    try {
+      const requestData = {
+        content: `${subject}\n\n${content}`,
+        to: receiverList.join(', '),
+        send_time: isScheduled ? sendDate.toISOString() : null,
+      };
+
+      const response = await axios.post(
+        'https://dev.enble.site/api/messages/temp',
+        requestData,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      if (response.data.isSuccess) {
+        alert('메시지가 임시 저장되었습니다.');
+      } else {
+        alert(`임시 저장 실패: ${response.data.message}`);
+      }
+    } catch (error) {
+      console.error('임시 저장 중 에러 발생:', error);
+      alert('임시 저장 중 문제가 발생했습니다.');
+    }
+  };
+
   
   
   return (
@@ -198,7 +246,7 @@ function MainPage() {
         value={content}
         onChange={(e) => setContent(e.target.value)}
       ></textarea>
-      <button className="tem-save">임시 저장 하기</button>
+      <button className="tem-save" onClick={handleTempSave}>임시 저장 하기</button>
       <div>
         <label className="image-addition">이미지 추가</label>
         <div className="image-background">
