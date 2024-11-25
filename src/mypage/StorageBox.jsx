@@ -71,24 +71,29 @@ function StorageBox() {
         </button>
       </div>
       <div className="message-list">
-        {messages.map((message) => (
-          <div key={message.message_id} className="message-container">
-            <div className="message-header">
-              <span className="message-date">{message.to}</span>
-              <i className="delete-icon"
-              onClick={() => deleteMessage(message.message_id)}>🗑</i>
+        {messages
+          .filter((message) => message.status === "SCHEDULED") // status가 SCHEDULED인 메시지만 필터링
+          .map((message) => (
+            <div key={message.message_id} className="message-container">
+              <div className="message-header">
+                <span className="message-date">{message.to}</span>
+                <i
+                  className="delete-icon"
+                  onClick={() => deleteMessage(message.message_id)}
+                >
+                  🗑
+                </i>
+              </div>
+              <div className="message-card">
+                <p>{message.content}</p>
+                <span className="message-date">
+                  {new Date(message.send_time).toLocaleDateString()} {/* 날짜 포맷 */}
+                </span>
+              </div>
             </div>
-            <div className="message-card">
-              <p>{message.content}</p>
-              <span className="message-date">
-                {new Date(message.send_time).toLocaleDateString()} {/* 날짜 포맷 */}
-              </span>
-            </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
   );
 }
-
 export default StorageBox;
