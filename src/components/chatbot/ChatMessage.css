@@ -1,0 +1,48 @@
+.message-container {
+  display: flex;
+  flex-direction: column;
+  margin: 1vh 0;
+  width: 100%;
+  padding: 0 2vw;
+}
+
+.message-content {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.5vw;
+}
+
+.user-message {
+  align-items: flex-end;
+}
+
+.bot-message {
+  align-items: flex-start;
+}
+
+.message-bubble {
+  max-width: 60%;
+  padding: 1vh 1vw;
+  border-radius: 15px;
+  font-family: 'Inter', sans-serif;
+  font-size: 1vw;
+  line-height: 1.4;
+}
+
+.user-bubble {
+  background: rgba(14, 54, 114, 0.15);
+  color: #000000;
+}
+
+.bot-bubble {
+  background: rgba(217, 217, 217, 0.5);
+  color: #313131;
+}
+
+.message-time {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.7vw;
+  color: #666;
+  margin-bottom: 0.3vh;
+  white-space: nowrap;
+}
