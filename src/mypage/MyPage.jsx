@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './MyPage.css';
 import ProfileImage from './profile.png';
 import MemberInfo from './MemberInfo';
@@ -6,13 +6,22 @@ import ReserveMessege from './ReserveMessage';
 import Outbox from './Outbox';
 import MyPageAddress from './MyPageAddress';
 import StorageBox from './StorageBox';
-import { useNavigate } from 'react-router-dom'; // useNavigate 임포트
+import { useNavigate , useLocation } from 'react-router-dom'; // useNavigate 임포트
 import backImage from './back.png';
 
 function MyPage() {
+  const location = useLocation();
   const [activeComponent, setActiveComponent] = useState('MemberInfo'); // 기본 활성 컴포넌트
   const [activeMenu, setActiveMenu] = useState('MemberInfo'); // 기본 활성 메뉴
   const navigate = useNavigate(); // useNavigate 훅 사용
+
+  useEffect(() => {
+    // location.state가 있을 경우, 해당 컴포넌트 활성화
+    if (location.state?.target) {
+      setActiveComponent(location.state.target);
+      setActiveMenu(location.state.target);
+    }
+  }, [location.state]);
 
   const renderActiveComponent = () => {
     switch (activeComponent) {
