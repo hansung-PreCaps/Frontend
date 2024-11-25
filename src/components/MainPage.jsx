@@ -306,7 +306,10 @@ function MainPage() {
     </div>
 
     {/* 모달을 렌더링 */}
-    {isPreviewOpen && <PreviewModal onClose={closePreview} />}
+    {isPreviewOpen && <PreviewModal 
+                subject={subject}
+                content={content}
+                onClose={closePreview} />}
 
   </div>
 </main>
