@@ -116,7 +116,7 @@ function MainPage() {
           {
             to: formattedTo,
             change_word: {
-              var1: 'value1', // 필요하면 값을 설정
+              var1: 'value1', // 필요하면g 값을 설정
               var2: 'value2',
               var3: '',
               var4: '',
