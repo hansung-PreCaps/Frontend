@@ -7,6 +7,7 @@ import Bx_chat from './bx_chat.png';
 import PreviewModal from './PreviewModal';
 import AIModal from './AIModal';
 import { useNavigate } from 'react-router-dom'; // useNavigate 가져오기
+import axios from 'axios';
 
 
 function MainPage() {
@@ -90,6 +91,63 @@ function MainPage() {
     }
   };
 
+  const handleSendMessage = async () => {
+    try {
+      // 발신번호에서 하이픈 제거
+      const formattedFrom = sendNumber.replace(/-/g, '');
+  
+      // 첫 번째 수신번호에서 하이픈 제거
+      const formattedTo = receiverList[0]?.replace(/-/g, '');
+  
+      if (!formattedFrom || !formattedTo) {
+        alert('발신번호와 수신번호를 확인해주세요.');
+        return;
+      }
+  
+      // API 요청 데이터 생성
+      const requestData = {
+        account: 'your_account_name', // 계정 이름을 여기에 입력
+        message_type: 'LMS',
+        content: `${subject}\n\n${content}`, // 제목과 내용을 포함한 문자열
+        from: formattedFrom,
+        duplicate_flag: 'N',
+        target_count: 1, // 임시로 1로 설정
+        targets: [
+          {
+            to: formattedTo,
+            change_word: {
+              var1: 'value1', // 필요하면 값을 설정
+              var2: 'value2',
+              var3: '',
+              var4: '',
+              var5: '',
+              var6: '',
+              var7: '',
+            },
+            name: 'receiver_name', // 수신자 이름 (필요시 추가)
+          },
+        ],
+        ref_key: 'ref_key_example', // 참조 키
+      };
+  
+      console.log('Request Data:', JSON.stringify(requestData, null, 2));
+  
+      // API 요청 보내기
+      const response = await axios.post('https://dev.enble.site/api/messages/send', requestData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      // 성공 메시지 출력
+      console.log('Response Data:', response.data);
+      alert('메시지가 성공적으로 발송되었습니다!');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('메시지 발송에 실패했습니다. 다시 시도해주세요.');
+    }
+  };
   
   
   return (
@@ -132,7 +190,7 @@ function MainPage() {
       <div className="button-group">
       <button className="graybutton" onClick={handleOpenModal}>AI 자동 생성</button>
       {isModalOpen && <AIModal onClose={handleCloseModal} setContent={setContent}/>}
-         <button className="graybutton2">내 문자함</button>
+         <button className="graybutton2" onClick={() => navigate('/mypage', { state: { target: 'StorageBox' } })}>내 문자함</button>
       </div>
       <textarea
         className="input-content"
@@ -168,7 +226,7 @@ function MainPage() {
       <div>
         <label className="reception">수신번호 입력</label>
         <div className="button-container">
-          <button className="address">주소록</button>
+          <button className="address" onClick={() => navigate('/mypage', { state: { target: 'MyPageAddress' } })}>주소록</button>
           <button className="recent">최근내역</button>
         </div>
         <div className="container">
@@ -190,7 +248,7 @@ function MainPage() {
       <div className="receiver-section">
         <div className="receiver-container">
         <label className="receiver">받는 사람</label>
-        <button className="all-remove">전체 삭제</button>
+        <button className="all-remove" onClick={() => setReceiverList([])}>전체 삭제</button>
         </div>
         <div className="receiver-background">
         <div className="receiver-item-background">
@@ -201,7 +259,7 @@ function MainPage() {
         ))}
         </div>
         <div className="receiver-container">
-        <label className="receiver-N">전체 N명</label>
+        <label className="receiver-N">전체 {receiverList.length}명</label>
         <button className="address-save">주소록 저장</button>
         </div>
         </div>
@@ -212,8 +270,8 @@ function MainPage() {
       <div>
         <label className="sending-setting">발송 설정</label>
         <div className="sending-options">
-        <button className="immed-send" onClick={() => setIsScheduled(false)}>즉시 발송</button>
-        <button className="reser-send" onClick={() => setIsScheduled(true)}>예약 발송</button>
+        <button className={`immed-send ${!isScheduled ? 'activ' : ''}`} onClick={() => setIsScheduled(false)}>즉시 발송</button>
+        <button className={`reser-send ${isScheduled ? 'activ' : ''}`} onClick={() => setIsScheduled(true)}>예약 발송</button>
         </div>
 
         {isScheduled && (
@@ -242,7 +300,7 @@ function MainPage() {
       )}
     </div>
       <div className="sending-container">
-      <button className="sending">발송하기</button>
+      <button className="sending" onClick={handleSendMessage}>발송하기</button>
       <button className="preview" onClick={openPreview}>미리보기</button>
       </div>
     </div>
