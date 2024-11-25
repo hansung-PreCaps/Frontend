@@ -1,23 +1,30 @@
 import React, { useState } from 'react';
 import PropTypes from "prop-types";
-import axios from "axios";
 import './AddGroupModal.css';
+import axiosInstance from "../utils/axiosInstance";
 
 function AddGroupModal({ onClose, onGroupAdded }) {
   const [groupName, setGroupName] = useState("");
 
   const handleAddGroup = async () => {
     try {
-      const response = await axios.post("/api/groups", { group_name: groupName });
-      console.log("그룹 생성 성공:", response.data);
+      const response = await axiosInstance.post("/api/groups", { group_name: groupName });
+      const newGroupId = response.data.id || `temp-${new Date().getTime()}`;
+      console.log("API 응답 ID:", response.data.id);
 
-      // 성공 시 부모 컴포넌트에 새로운 그룹 추가 요청
-      onGroupAdded({ id: response.data.id, name: groupName, contacts: [] });
+      if (!response.data.id) {
+        console.warn("서버에서 유효한 ID를 반환하지 않았습니다. 임시 ID가 생성되었습니다.");
+      }
+
+      onGroupAdded({
+        id: newGroupId,
+        name: groupName,
+        contacts: [],
+      });
       alert("그룹이 성공적으로 추가되었습니다!");
-      onClose(); // 모달 닫기
+      onClose();
     } catch (error) {
-      console.error("그룹 생성 실패:", error);
-      alert("그룹 생성에 실패했습니다. 다시 시도해주세요.");
+      console.error("그룹 생성 실패:", error.response || error.message);
     }
   };
 

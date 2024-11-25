@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import axios from "axios";
 import './MyPageAddress.css';
 import AddGroupModal from './AddGroupModal';
+import axiosInstance from "../utils/axiosInstance";
+
 
 function MyPageAddress() {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
@@ -11,23 +12,38 @@ function MyPageAddress() {
     { id: 3, name: "그룹 미지정", contacts: ["010-5678-9012", "010-6789-0123"] },
   ]);
 
+  const handleGroupAdded = (newGroup) => {
+    console.log("새로 추가된 그룹:", newGroup); // 로그 출력
+    setGroups((prevGroups) => [...prevGroups, newGroup]);
+  };
+
   const handleDeleteGroup = async (groupId) => {
     try {
-      const response = await axios.delete(`/api/groups/${groupId}`);
+      // 요청 ID 로그 출력
+      console.log("삭제 요청 ID:", groupId);
+
+      const response = await axiosInstance.delete(`/api/groups/${groupId}`);
       console.log("그룹 삭제 성공:", response.data);
 
       // 삭제 성공 후 UI에서 그룹 제거
       setGroups((prevGroups) => prevGroups.filter((group) => group.id !== groupId));
       alert("그룹이 성공적으로 삭제되었습니다!");
     } catch (error) {
-      console.error("그룹 삭제 실패:", error);
-      alert("그룹 삭제에 실패했습니다. 다시 시도해주세요.");
+      console.error("그룹 삭제 실패:", error.response || error.message);
+      if (error.response) {
+        alert(`삭제 실패: ${error.response.data.message || "알 수 없는 오류입니다."}`);
+      } else {
+        alert("네트워크 오류로 삭제에 실패했습니다.");
+      }
     }
   };
 
   const handleUpdateGroupName = async (groupId, newGroupName) => {
     try {
-      const response = await axios.patch(`/api/groups/${groupId}`, { group_name: newGroupName });
+      // 요청 ID 로그 출력
+      console.log("수정 요청 ID:", groupId);
+
+      const response = await axiosInstance.patch(`/api/groups/${groupId}`, { group_name: newGroupName });
       console.log("그룹 이름 수정 성공:", response.data);
 
       // 이름 수정 성공 후 UI 업데이트
@@ -38,8 +54,12 @@ function MyPageAddress() {
       );
       alert("그룹 이름이 성공적으로 수정되었습니다!");
     } catch (error) {
-      console.error("그룹 이름 수정 실패:", error);
-      alert("그룹 이름 수정에 실패했습니다. 다시 시도해주세요.");
+      console.error("그룹 이름 수정 실패:", error.response || error.message);
+      if (error.response) {
+        alert(`수정 실패: ${error.response.data.message || "알 수 없는 오류입니다."}`);
+      } else {
+        alert("네트워크 오류로 수정에 실패했습니다.");
+      }
     }
   };
 
@@ -68,21 +88,28 @@ function MyPageAddress() {
         <button className="tool-button">전체 삭제</button>
       </div>
       <div className="address-list">
-        {groups.map((group) => (
-          <div className="group" key={group.id}>
+        {groups.map((group, index) => (
+          <div className="group" key={group.id ? `group-${group.id}` : `temp-${index}`}>
             <label>
               <input type="checkbox" /> {group.name}
             </label>
             <button
               className="edit-button"
-              onClick={() => handleUpdateGroupName(group.id, prompt("새 그룹 이름을 입력하세요:"))}
-            >
+              onClick={() => {
+                const newGroupName = prompt("새 그룹 이름을 입력하세요:");
+                if (newGroupName) {
+                  handleUpdateGroupName(group.id, newGroupName);
+                }
+              }}>
               이름 수정
             </button>
             <button
               className="delete-button"
-              onClick={() => handleDeleteGroup(group.id)}
-            >
+              onClick={() => {
+                if (window.confirm("정말로 이 그룹을 삭제하시겠습니까?")) {
+                  handleDeleteGroup(group.id);
+                }
+              }}>
               삭제
             </button>
             <div className="contacts">
@@ -97,63 +124,12 @@ function MyPageAddress() {
           </div>
         ))}
       </div>
-      {/* <div className="address-list">
-        <div className="group">
-          <label>
-            <input type="checkbox" /> 그룹1
-          </label>
-          <button className="edit-button" onClick={() => handleUpdateGroupName(groupId, prompt("새 그룹 이름을 입력하세요:"))}>이름 수정</button>
-          <div className="contacts">
-            {Array.from({ length: 10 }, (_, i) => (
-              <div className="contact" key={`group1-${i}`}>
-                <label>
-                  <input type="checkbox" /> 010-1234-56{i.toString().padStart(2, '0')}
-                </label>
-                <button className="delete-button" onClick={() => handleDeleteGroup(groupId)}>삭제</button>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="group">
-          <label>
-            <input type="checkbox" /> 그룹2
-          </label>
-          <button className="edit-button" onClick={() => handleUpdateGroupName(groupId, prompt("새 그룹 이름을 입력하세요:"))}>이름 수정</button>
-          <div className="contacts">
-            {Array.from({ length: 8 }, (_, i) => (
-              <div className="contact" key={`group2-${i}`}>
-                <label>
-                  <input type="checkbox" /> 010-5678-90{i.toString().padStart(2, '0')}
-                </label>
-                <button className="delete-button" onClick={() => handleDeleteGroup(groupId)}>삭제</button>
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="group">
-          <label>
-            <input type="checkbox" /> 그룹 미지정
-          </label>
-          <div className="contacts">
-            {Array.from({ length: 15 }, (_, i) => (
-              <div className="contact" key={`group3-${i}`}>
-                <label>
-                  <input type="checkbox" /> 010-1111-22{i.toString().padStart(2, '0')}
-                </label>
-                <button className="delete-button" onClick={() => handleDeleteGroup(groupId)}>삭제</button>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div> */}
       {isModalOpen && (
         <AddGroupModal
           onClose={handleCloseModal}
-          onGroupAdded={(newGroup) =>
-            setGroups((prevGroups) => [...prevGroups, newGroup])
-          } // onGroupAdded 전달
+          onGroupAdded={handleGroupAdded} // 그룹 추가 시 호출
         />
-      )} {/* 모달 렌더링 */}
+      )}
     </div>
   );
 }
