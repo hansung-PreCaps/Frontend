@@ -566,6 +566,12 @@ header {
   line-height: 2vh;
 }
 
+.activ {
+  background-color: #007bff; /* 파란색 배경 */
+  color: white; /* 글자색 흰색 */
+  border-color: #0056b3; /* 활성화된 상태의 테두리 */
+}
+
 @media (max-width: 768px) {
   .main-container {
     flex-direction: column;

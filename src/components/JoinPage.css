@@ -122,3 +122,31 @@ body {
 .join-button:hover {
   background-color: #324b81;
 }
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.prompt-input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  width: 100%;
+  resize: none;
+}
+
+.option-button {
+  padding: 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.canvas {
+  border: 1px solid #ddd;
+  margin-top: 20px;
+  margin-left: 100px;
+}
