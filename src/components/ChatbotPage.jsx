@@ -43,29 +43,6 @@ function ChatbotPage() {
     });
   };
 
-  // const handleSendMessage = () => {
-  //   if (inputMessage.trim()) {
-  //     const userMessage = {
-  //       id: Date.now().toString(),
-  //       text: inputMessage,
-  //       isUser: true,
-  //       timestamp: getCurrentTime(),
-  //     };
-
-  //     setMessages((prev) => [...prev, userMessage]);
-  //     setInputMessage("");
-
-  //     // Temporary bot response for testing
-  //     const botResponse = {
-  //       id: Date.now().toString(),
-  //       text: "안녕하세요! 메시지를 받았습니다.",
-  //       isUser: false,
-  //       timestamp: getCurrentTime(),
-  //     };
-  //     setMessages((prev) => [...prev, botResponse]);
-  //   }
-  // };
-
   const handleSendMessage = async () => {
     if (inputMessage.trim()) {
       const userMessage = {
