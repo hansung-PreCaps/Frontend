@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@aws-sdk/client-lex-runtime-v2": "^3.699.0",
+    "@aws-sdk/credential-provider-cognito-identity": "^3.699.0",
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.7",
     "postcss": "^8.4.47",
