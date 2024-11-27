@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./ImagePage.css";
 import Group from "./Group.png";
-import Bx_chat from "./Bx_chat.png";
+import Bx_chat from "./bx_chat.png";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
