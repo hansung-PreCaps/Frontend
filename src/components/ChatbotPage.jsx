@@ -8,20 +8,29 @@ import ChatbotContainer from "./chatbot/ChatbotContainer";
 import { useNavigate } from "react-router-dom"; // useNavigate 가져오기
 import { useState, useEffect } from "react"; // useState 가져오기 추가
 
-AWS.config.update({
-  region: 'ap-northeast-2',
-  credentials: new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'ap-northeast-2:51ad30e2-54ab-41dd-b46c-58a6d93d7746'
-  })
-});
+import { LexRuntimeV2Client, RecognizeTextCommand } from "@aws-sdk/client-lex-runtime-v2";
+import { fromCognitoIdentityPool } from "@aws-sdk/credential-provider-cognito-identity";
 
-const lexRuntime = new AWS.LexRuntime();
+const cognitoCredentials = fromCognitoIdentityPool({
+  clientConfig: { region: 'ap-northeast-2' },
+  identityPoolId: 'ap-northeast-2:51ad30e2-54ab-41dd-b46c-58a6d93d7746'
+});
 
 function ChatbotPage() {
   const navigate = useNavigate(); // navigate 함수 생성
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [inputMessage, setInputMessage] = useState("");
   const [messages, setMessages] = useState([]);
+  const [sessionId, setSessionId] = useState(null); // 세션 ID 생성
+
+  useEffect(() => {
+    setSessionId(`session-${Date.now()}`);
+  }, []);
+
+  const lexClient = new LexRuntimeV2Client({
+    region: 'ap-northeast-2',
+    credentials: cognitoCredentials
+  });
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -34,29 +43,6 @@ function ChatbotPage() {
     });
   };
 
-  // const handleSendMessage = () => {
-  //   if (inputMessage.trim()) {
-  //     const userMessage = {
-  //       id: Date.now().toString(),
-  //       text: inputMessage,
-  //       isUser: true,
-  //       timestamp: getCurrentTime(),
-  //     };
-  
-  //     setMessages((prev) => [...prev, userMessage]);
-  //     setInputMessage("");
-  
-  //     // Temporary bot response for testing
-  //     const botResponse = {
-  //       id: Date.now().toString(),
-  //       text: "안녕하세요! 메시지를 받았습니다.",
-  //       isUser: false,
-  //       timestamp: getCurrentTime(),
-  //     };
-  //     setMessages((prev) => [...prev, botResponse]);
-  //   }
-  // };
-
   const handleSendMessage = async () => {
     if (inputMessage.trim()) {
       const userMessage = {
@@ -65,40 +51,53 @@ function ChatbotPage() {
         isUser: true,
         timestamp: getCurrentTime(),
       };
-  
+
       setMessages((prev) => [...prev, userMessage]);
       setInputMessage("");
-  
+
       try {
+        const access_token = localStorage.getItem('access_token');
+        const authHeader = `Bearer ${access_token}`;
+        
+        console.log('access_token:', access_token); // 토큰 로깅
+
         const params = {
-          botAlias: 'TSTALIASID',
-          botName: 'PicTalkBot',
-          inputText: inputMessage,
-          userId: `session-${Date.now()}`
-        };
-  
-        lexRuntime.postText(params, (err, data) => {
-          if (err) {
-            console.error('Lex error:', err);
-            const errorMessage = {
-              id: Date.now().toString(),
-              text: "죄송합니다. 챗봇 서비스에 문제가 있습니다.",
-              isUser: false,
-              timestamp: getCurrentTime(),
-            };
-            setMessages((prev) => [...prev, errorMessage]);
-          } else {
-            const botResponse = {
-              id: Date.now().toString(),
-              text: data.message,
-              isUser: false,
-              timestamp: getCurrentTime(),
-            };
-            setMessages((prev) => [...prev, botResponse]);
+          botId: 'IDYXD04XNB',
+          botAliasId: 'N9X07DPXOS',
+          localeId: 'ko_KR',
+          sessionId: sessionId,
+          text: inputMessage,
+          sessionState: {
+            sessionAttributes: {
+              'Authorization': authHeader
+            }
           }
-        });
+        };
+
+        const command = new RecognizeTextCommand(params);
+        const response = await lexClient.send(command);
+
+        console.log('Lex response:', response); // 응답 로깅
+
+        const botResponses = response.messages.map(message => ({
+          id: Date.now().toString() + Math.random(),
+          text: message.content,
+          isUser: false,
+          timestamp: getCurrentTime(),
+        }));
+
+        setMessages((prev) => [...prev, ...botResponses]);
+
       } catch (error) {
         console.error('Lex communication error:', error);
+        const errorMessage = {
+          id: Date.now().toString(),
+          text: "죄송합니다. 챗봇 서비스에 문제가 있습니다.",
+          isUser: false,
+          timestamp: getCurrentTime(),
+        };
+
+        setMessages((prev) => [...prev, errorMessage]);
       }
     }
   };
