@@ -79,12 +79,24 @@ function ChatbotPage() {
 
         console.log('Lex response:', response); // 응답 로깅
 
-        const botResponses = response.messages.map(message => ({
-          id: Date.now().toString() + Math.random(),
-          text: message.content,
-          isUser: false,
-          timestamp: getCurrentTime(),
-        }));
+        const botResponses = response.messages.map(msg => {
+          if (msg.contentType === 'ImageResponseCard') {
+            return {
+              id: Date.now().toString() + Math.random(),
+              text: msg.imageResponseCard.subtitle,
+              imageUrl: msg.imageResponseCard.imageUrl,
+              isUser: false,
+              timestamp: getCurrentTime(),
+            };
+          } else {
+            return {
+              id: Date.now().toString() + Math.random(),
+              text: msg.content,
+              isUser: false,
+              timestamp: getCurrentTime(),
+            };
+          }
+        });
 
         setMessages((prev) => [...prev, ...botResponses]);
 
