@@ -199,7 +199,7 @@ function ChatbotPage() {
               onClick={handleSendMessage}
               alt="Send"
               aria-label="챗봇과 대화하기"
-            />
+            >전송</button>
           </div>
         </section>
       </main>

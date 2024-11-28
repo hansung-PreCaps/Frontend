@@ -236,8 +236,15 @@ header {
   position: absolute;
   right: 10px;
   top: 50%;
-  transform: translateY(-40%);
-  width: 25px; /* 이미지 크기 조절 */
-  height: 25px;
+  transform: translateY(-45%);
+  display: flex; /* 한 줄 배치 */
+  align-items: center; /* 세로 중앙 정렬 */
+  gap: 5px; /* 아이콘과 텍스트 간 간격 */
+  width: auto; /* 컨테이너 크기를 내용에 맞게 조정 */
+  height: auto;
   cursor: pointer;
+  border: none;
+  background: none;
+  color: black;
 }
+
