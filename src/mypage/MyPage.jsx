@@ -52,7 +52,7 @@ function MyPage() {
   return (
     <div>
       <nav className="navbar">
-        <div className="navbar-logo">Pic&Talk</div>
+        <div className="navbar-logo" onClick={() => navigate('/mainpage')}>Pic&Talk</div>
         <h2 className="navbar-title">마이페이지</h2>
         <button className="back-button" onClick={handleBackButtonClick}>
         <img src={backImage} alt="Back" className="back-icon" />

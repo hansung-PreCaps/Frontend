@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import "./ImagePage.css";
+import styles from "./ImagePage.module.css"; // CSS 모듈로 변경
 import Group from "./Group.png";
 import Bx_chat from "./bx_chat.png";
 import axios from "axios";
@@ -140,76 +140,99 @@ function ImagePage() {
 
   return (
     <div>
-      <header>
-        <div className="left-section">
-          <img src={Group} alt="Group" className="Group" />
-          <h1 className="title">Pic&Talk</h1>
-          <img src={Bx_chat} alt="Bx_chat" className="Bx_chat" />
+      <header className={styles.header}>
+        <div className={styles.leftSection}>
+          <img src={Group} alt="Group" className={styles.group} />
+          <h1 className={styles.title} onClick={() => navigate('/mainpage')}>Pic&Talk</h1>
+          <img src={Bx_chat} alt="Bx_chat" className={styles.bxChat} />
         </div>
-        <div className="center-section">
-          <h1 className="h1-send" onClick={() => navigate("/mainpage")}>
+        <div className={styles.centerSection}>
+          <h1
+            className={styles.h1Send}
+            onClick={() => navigate("/mainpage")}
+          >
             문자 전송
           </h1>
-          <h1 className="h1-chatbot" onClick={() => navigate("/chatbotpage")}>
+          <h1
+            className={styles.h1Chatbot}
+            onClick={() => navigate("/chatbotpage")}
+          >
             챗봇
           </h1>
         </div>
       </header>
 
-      <main className="main-content">
-        <section className="options">
+      <main className={styles.mainContent}>
+        <section className={styles.options}>
           <textarea
             placeholder="상황 입력"
             value={situation}
             onChange={(e) => setSituation(e.target.value)}
+            className={styles.textarea}
           ></textarea>
           <textarea
             placeholder="분위기 입력"
             value={atmosphere}
             onChange={(e) => setAtmosphere(e.target.value)}
+            className={styles.textarea}
           ></textarea>
-          <button onClick={generateImage}>AI 이미지 생성</button>
+          <button onClick={generateImage} className={styles.button}>
+            AI 이미지 생성
+          </button>
           <input
             type="text"
             placeholder="텍스트 입력"
             value={currentText}
             onChange={(e) => setCurrentText(e.target.value)}
+            className={styles.input}
           />
-          <button onClick={addText}>텍스트 추가</button>
+          <button onClick={addText} className={styles.button}>
+            텍스트 추가
+          </button>
           <input
             type="color"
             value={color}
             onChange={(e) => setColor(e.target.value)}
+            className={styles.colorPicker}
           />
           <select
             value={fontSize}
             onChange={(e) => setFontSize(Number(e.target.value))}
+            className={styles.select}
           >
-            {[8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 56].map((size) => (
-              <option key={size} value={size}>
-                {size}px
-              </option>
-            ))}
+            {[8, 10, 12, 14, 16, 18, 20, 24, 28, 32, 36, 40, 48, 56].map(
+              (size) => (
+                <option key={size} value={size}>
+                  {size}px
+                </option>
+              )
+            )}
           </select>
-          <button onClick={saveImage}>이미지 저장</button>
+          <button onClick={saveImage} className={styles.button}>
+            이미지 저장
+          </button>
         </section>
 
-        <div className="canvas-container">
+        <div className={styles.canvasContainer}>
           {imageUrl ? (
-            <img src={imageUrl} alt="AI 생성 이미지" className="image-display" />
+            <img
+              src={imageUrl}
+              alt="AI 생성 이미지"
+              className={styles.imageDisplay}
+            />
           ) : (
-            <span className="no-image-text">이미지가 없습니다</span>
+            <span className={styles.noImageText}>이미지가 없습니다</span>
           )}
           <canvas
             ref={canvasRef}
-            className="canvas-layer"
+            className={styles.canvasLayer}
             onMouseMove={handleMouseMove}
             onMouseUp={handleMouseUp}
           ></canvas>
           {textList.map((text, index) => (
             <div
               key={index}
-              className="text-item"
+              className={styles.textItem}
               style={{
                 top: text.y,
                 left: text.x,
@@ -221,7 +244,7 @@ function ImagePage() {
             >
               <span>{text.text}</span>
               <button
-                className="delete-button"
+                className={styles.deleteButton}
                 onClick={() => deleteText(index)}
               >
                 X
