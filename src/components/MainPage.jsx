@@ -129,10 +129,9 @@ function MainPage() {
         return `${year}-${month}-${day}T${formattedHour}:${formattedMinute}:${seconds}`;
       };
 
-
       const status = isScheduled ? 'SCHEDULED' : 'SENT';
       let sendTime = null;
-
+  
       if (isScheduled) {
         sendTime = formatDateTime(sendDate, selectedHour, selectedMinute);
       }
@@ -158,7 +157,7 @@ function MainPage() {
         message_type: 'LMS',
         content: content || '메시지 내용이 없습니다.',
         status: status,
-        ...(sendTime && { send_time: sendTime }), // 예약 발송일 경우 send_time 추가
+        ...(sendTime && { send_time: sendTime }),
       };
 
           // 예약 발송일 경우 send_time 추가
@@ -168,7 +167,14 @@ function MainPage() {
   
       // FormData에 'request' 키로 JSON 데이터 추가
       formData.append('request', JSON.stringify(requestData));
-  
+
+      const imageInput = document.querySelector('#imageInput');
+      if (imageInput && imageInput.files.length > 0) {
+        const imageFile = imageInput.files[0];
+        formData.append('image', imageFile, `${imageFile.name};type=${imageFile.type}`);
+        console.log('Image File:', imageFile);
+      console.log('MIME Type:', imageFile.type);
+      }
       // 디버깅용 데이터 확인
       for (let [key, value] of formData.entries()) {
         console.log(`${key}: ${value}`);
@@ -195,14 +201,50 @@ function MainPage() {
   const handleTempSave = async () => {
     const confirmSave = window.confirm('메시지를 임시 저장하시겠습니까?');
     if (!confirmSave) return;
-
+  
     try {
-      const requestData = {
-        content: `${subject}\n\n${content}`,
-        to: receiverList.join(', '),
-        send_time: isScheduled ? sendDate.toISOString() : null,
+      // 발신번호와 수신번호 처리
+      const formattedFrom = sendNumber.replace(/-/g, '');
+      const formattedTo = receiverList[0]?.replace(/-/g, '');
+  
+      if (!formattedFrom || !formattedTo) {
+        alert('발신번호와 수신번호를 확인해주세요.');
+        return;
+      }
+  
+      // 예약 발송 시간 처리
+      const formatDateTime = (date, hour, minute) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0');
+        const day = String(date.getDate()).padStart(2, '0');
+        const formattedHour = String(hour).padStart(2, '0');
+        const formattedMinute = String(minute).padStart(2, '0');
+        const seconds = '00';
+  
+        return `${year}-${month}-${day}T${formattedHour}:${formattedMinute}:${seconds}`;
       };
-
+  
+      let sendTime = null;
+      if (isScheduled) {
+        sendTime = formatDateTime(sendDate, selectedHour, selectedMinute);
+      }
+  
+      // API 요청 데이터
+      const requestData = {
+        duplicate_flag: 'N',
+        content: `${subject}\n\n${content}`,
+        from: formattedFrom,
+        to: formattedTo,
+        send_time: sendTime || null,
+        target_count: receiverList.length,
+        targets: receiverList.map((receiver) => ({
+          to: receiver,
+          change_word: {}, // 필요한 데이터가 없으면 빈 객체로 전달
+          name: '받는사람', // 특정 이름이 필요하면 여기에 설정
+        })),
+      };
+  
+      // API 요청 보내기
       const response = await axios.post(
         'https://dev.enble.site/api/messages/temp',
         requestData,
@@ -213,17 +255,19 @@ function MainPage() {
           },
         }
       );
-
+  
       if (response.data.isSuccess) {
         alert('메시지가 임시 저장되었습니다.');
+        console.log('Response:', response.data);
       } else {
         alert(`임시 저장 실패: ${response.data.message}`);
       }
     } catch (error) {
-      console.error('임시 저장 중 에러 발생:', error);
+      console.error('임시 저장 중 에러 발생:', error.response?.data || error.message);
       alert('임시 저장 중 문제가 발생했습니다.');
     }
   };
+  
 
   
   

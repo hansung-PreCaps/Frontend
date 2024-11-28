@@ -16,9 +16,13 @@ function Outbox() {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
+        params: {
+          status: 'TEMP', // 여기에 원하는 파라미터 추가
+        },
       });
       if (response.data.isSuccess) {
         setMessages(response.data.result);
+        console.log(response.data.result);
       } else {
         setError('데이터를 가져오는데 실패했습니다.');
       }
@@ -96,7 +100,7 @@ function Outbox() {
               <div className="outbox-body">{message.content}</div>
               <div className="outbox-footer">
                 <span className="outbox-date">
-                  {new Date(message.send_time).toLocaleDateString()} {/* 날짜 포맷 */}
+
                 </span>
                 <button className="outbox-edit"onClick={() => handleEditMessage(message)}>수정</button>
               </div>

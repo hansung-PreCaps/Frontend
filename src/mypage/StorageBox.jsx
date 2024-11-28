@@ -10,12 +10,9 @@ function StorageBox() {
   // API 요청
 const fetchMessages = async () => {
   try {
-    const response = await axios.get('https://dev.enble.site/api/messages', {
+    const response = await axios.get('https://dev.enble.site/api/messages/all', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('access_token')}`, // 인증 토큰
-      },
-      params: {
-        status: 'SENT', // 여기에 원하는 파라미터 추가
       },
     });
         if (response.data.isSuccess) {
@@ -64,6 +61,8 @@ const fetchMessages = async () => {
   if (loading) return <div>로딩 중...</div>; // 로딩 중 메시지
   if (error) return <div>{error}</div>; // 에러 메시지
 
+  const filteredMessages = messages.filter((message) => message.status !== 'TEMP' && message.status !== 'SCHEDULED');
+
   return (
     <div className="text-storage-container">
       <h2 className="text-storage-title">문자 보관함</h2>
@@ -74,27 +73,25 @@ const fetchMessages = async () => {
         </button>
       </div>
       <div className="message-list">
-        {messages
-          .filter((message) => message.status === "SCHEDULED") // status가 SCHEDULED인 메시지만 필터링
-          .map((message) => (
-            <div key={message.message_id} className="message-container">
-              <div className="message-header">
-                <span className="message-date">{message.to}</span>
-                <i
-                  className="delete-icon"
-                  onClick={() => deleteMessage(message.message_id)}
-                >
-                  🗑
-                </i>
-              </div>
-              <div className="message-card">
-                <p>{message.content}</p>
-                <span className="message-date">
-                  {new Date(message.send_time).toLocaleDateString()} {/* 날짜 포맷 */}
-                </span>
-              </div>
+        {filteredMessages.map((message) => (
+          <div key={message.message_id} className="message-container">
+            <div className="message-header">
+              <span className="message-date">{message.to}</span>
+              <i
+                className="delete-icon"
+                onClick={() => deleteMessage(message.message_id)}
+              >
+                🗑️
+              </i>
             </div>
-          ))}
+            <div className="message-card">
+              <p>{message.content}</p>
+              <span className="message-date">
+                {new Date(message.send_time).toLocaleDateString()} {/* 날짜 포맷 */}
+              </span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
