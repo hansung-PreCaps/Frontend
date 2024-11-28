@@ -79,12 +79,24 @@ function ChatbotPage() {
 
         console.log('Lex response:', response); // 응답 로깅
 
-        const botResponses = response.messages.map(message => ({
-          id: Date.now().toString() + Math.random(),
-          text: message.content,
-          isUser: false,
-          timestamp: getCurrentTime(),
-        }));
+        const botResponses = response.messages.map(msg => {
+          if (msg.contentType === 'ImageResponseCard') {
+            return {
+              id: Date.now().toString() + Math.random(),
+              text: msg.imageResponseCard.subtitle,
+              imageUrl: msg.imageResponseCard.imageUrl,
+              isUser: false,
+              timestamp: getCurrentTime(),
+            };
+          } else {
+            return {
+              id: Date.now().toString() + Math.random(),
+              text: msg.content,
+              isUser: false,
+              timestamp: getCurrentTime(),
+            };
+          }
+        });
 
         setMessages((prev) => [...prev, ...botResponses]);
 
@@ -114,7 +126,7 @@ function ChatbotPage() {
       <header>
         <div className="left-section">
           <img src={Group} alt="Group" className="Group" />
-          <h1 className="title" >Pic&Talk</h1>
+          <h1 className="title"onClick={() => navigate('/mainpage')} >Pic&Talk</h1>
           <img src={Bx_chat} alt="Bx_chat" className="Bx_chat" />
         </div>
 
@@ -187,7 +199,7 @@ function ChatbotPage() {
               onClick={handleSendMessage}
               alt="Send"
               aria-label="챗봇과 대화하기"
-            />
+            >전송</button>
           </div>
         </section>
       </main>

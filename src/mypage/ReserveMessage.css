@@ -5,6 +5,7 @@
     height: 600px;
     padding: 20px;
     margin: 20px 0;
+    overflow: hidden;
   }
   
   /* 타이틀 스타일 */

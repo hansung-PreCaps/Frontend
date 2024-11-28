@@ -1,48 +1,110 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './ReserveMessage.css';
 
 function ReserveMessege() {
+  const [messages, setMessages] = useState([]); // 메시지 데이터를 저장하는 상태
+  const [loading, setLoading] = useState(true); // 로딩 상태
+  const [error, setError] = useState(null); // 에러 상태
+
+    // API 요청
+const fetchMessages = async () => {
+  try {
+    const response = await axios.get('https://dev.enble.site/api/messages/all', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`, // 인증 토큰
+      },
+    });
+        if (response.data.isSuccess) {
+          console.log(response.data.result);
+          setMessages(response.data.result); // 메시지 데이터를 상태에 저장
+        } else {
+          setError('데이터를 가져오는데 실패했습니다.');
+        }
+      } catch (error) {
+        setError('데이터를 가져오는 중 에러가 발생했습니다.');
+      } finally {
+        setLoading(false); // 로딩 상태 종료
+      }
+    };
+
+      // 발송 취소 요청 함수
+  const cancelMessage = async (messageId) => {
+    const confirmCancel = window.confirm('해당 예약 문자를 발송 취소하시겠습니까?'); // 확인창
+    if (!confirmCancel) return;
+
+    try {
+      const response = await axios.patch(
+        `https://dev.enble.site/api/messages/${messageId}`,
+        { status: 'CANCELED' }, // 새로운 상태를 서버로 전달
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`, // 인증 토큰
+          },
+        }
+      );
+
+      if (response.data.isSuccess) {
+        alert('발송이 취소되었습니다.');
+        // 메시지 상태에서 취소된 메시지를 업데이트
+        setMessages((prevMessages) =>
+          prevMessages.map((message) =>
+            message.message_id === messageId ? { ...message, status: 'CANCELED' } : message
+          )
+        );
+      } else {
+        alert('발송 취소에 실패했습니다.');
+      }
+    } catch (error) {
+      console.error('발송 취소 중 에러 발생:', error);
+      alert('발송 취소 중 에러가 발생했습니다.');
+    }
+  };
+
+    useEffect(() => {
+      fetchMessages();
+    }, []);
+
+
+    if (loading) return <div>로딩 중...</div>; // 로딩 중 메시지
+    if (error) return <div>{error}</div>; // 에러 메시지
+
+
+
   return (
     <div className="reserve-message-container">
       <h2 className="reserve-message-title">예약 문자함</h2>
 
-      <div className="message-container">
+
+
+      <div className="message-list">
+      {messages
+    .filter((message) => message.status === "SCHEDULED" &&
+        new Date(message.send_time) > new Date()) // status가 SCHEDULED인 메시지만 필터링
+    .map((message) => (
+      <div key={message.message_id} className="message-container">
         <div className="message-header">
-          <p className="message-date">2024년 10월 10일 xxx 발송예정</p>
-          <button className="cancel-button">발송 취소</button>
+          <p className="message-date">
+            {new Date(message.send_time).toLocaleDateString()}  발송예정
+          </p>
+          <button
+            className="cancel-button"
+            onClick={() => cancelMessage(message.message_id)}
+          >
+            발송 취소
+          </button>
         </div>
         <div className="message-card">
           <p className="message-recipients">
-            +82 0-XXX-XXXX, +82 0-XXX-XXXX, +82 0-XXX-XXXX ...
+          {message.to}
           </p>
-          <p className="message-body">
-            특별한 기회를 놓치지 마세요! 지금 바로 50% 할인 행사에 참여하세요!
-            안정적 사고 모든 현장에서 이번 행사에서는 인기 상품을 절반 가격에 만날
-            수 있습니다. - 모든 카테고리의 제품이 포함됩니다. - 재고 소진 시까지 진행됩니다.
-            - 온라인 및 오프라인 매장에서 모두 적용됩니다. 지금 바로 쇼핑하러 가세요!
-            기회를 놓치지 마세요!
-          </p>
+          <p className="message-body">{message.content}</p>
         </div>
+      </div>
+    ))}
       </div>
 
-      <div className="message-container">
-        <div className="message-header">
-          <p className="message-date">2024년 10월 9일 xxx 발송예정</p>
-          <button className="cancel-button">발송 취소</button>
-        </div>
-        <div className="message-card">
-          <p className="message-recipients">
-            +82 0-XXX-XXXX, +82 0-XXX-XXXX, +82 0-XXX-XXXX ...
-          </p>
-          <p className="message-body">
-            특별한 기회를 놓치지 마세요! 지금 바로 50% 할인 행사에 참여하세요!
-            안정적 사고 모든 현장에서 이번 행사에서는 인기 상품을 절반 가격에 만날
-            수 있습니다. - 모든 카테고리의 제품이 포함됩니다. - 재고 소진 시까지 진행됩니다.
-            - 온라인 및 오프라인 매장에서 모두 적용됩니다. 지금 바로 쇼핑하러 가세요!
-            기회를 놓치지 마세요!
-          </p>
-        </div>
-      </div>
+
     </div>
   );
 }
