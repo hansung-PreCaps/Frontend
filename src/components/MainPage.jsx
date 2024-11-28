@@ -19,6 +19,8 @@ function MainPage() {
   const [receiverList, setReceiverList] = useState([]);
   const [isScheduled, setIsScheduled] = useState(false);
   const [sendDate, setSendDate] = useState(new Date());
+  const [selectedHour, setSelectedHour] = useState('00'); // 시간 상태
+  const [selectedMinute, setSelectedMinute] = useState('00'); // 분 상태
   const [isPreviewOpen, setIsPreviewOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate(); 
@@ -108,60 +110,87 @@ function MainPage() {
 
   const handleSendMessage = async () => {
     try {
-      // 발신번호에서 하이픈 제거
+      // 발신번호와 수신번호 처리
       const formattedFrom = sendNumber.replace(/-/g, '');
-  
-      // 첫 번째 수신번호에서 하이픈 제거
       const formattedTo = receiverList[0]?.replace(/-/g, '');
   
       if (!formattedFrom || !formattedTo) {
         alert('발신번호와 수신번호를 확인해주세요.');
         return;
       }
+      const formatDateTime = (date, hour, minute) => {
+        const year = date.getFullYear();
+        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작
+        const day = String(date.getDate()).padStart(2, '0');
+        const formattedHour = String(hour).padStart(2, '0');
+        const formattedMinute = String(minute).padStart(2, '0');
+        const seconds = "00"; // 초는 항상 00으로 설정
+      
+        return `${year}-${month}-${day}T${formattedHour}:${formattedMinute}:${seconds}`;
+      };
+
+
+      const status = isScheduled ? 'SCHEDULED' : 'SENT';
+      let sendTime = null;
+
+      if (isScheduled) {
+        sendTime = formatDateTime(sendDate, selectedHour, selectedMinute);
+      }
+
+
+
+      // FormData 객체 생성
+      const formData = new FormData();
   
-      // API 요청 데이터 생성
+      // 서버가 요구하는 데이터 구조를 `request`라는 키에 JSON 문자열로 추가
       const requestData = {
-        account: 'your_account_name',
-        message_type: 'LMS',
-        content: `${subject}\n\n${content}`, // 제목과 내용을 포함한 문자열
-        from: formattedFrom,
         duplicate_flag: 'N',
         target_count: 1,
         targets: [
           {
             to: formattedTo,
-            change_word: {
-              var1: 'value1', 
-              var2: 'value2',
-              var3: '',
-              var4: '',
-              var5: '',
-              var6: '',
-              var7: '',
-            },
-            name: 'receiver_name', 
+            change_word: {},
+            name: '서정찬',
           },
         ],
-        ref_key: 'ref_key_example', 
+        from: formattedFrom,
+        subject: subject || '테스트',
+        message_type: 'LMS',
+        content: content || '메시지 내용이 없습니다.',
+        status: status,
+        ...(sendTime && { send_time: sendTime }), // 예약 발송일 경우 send_time 추가
       };
+
+          // 예약 발송일 경우 send_time 추가
+    if (isScheduled && sendTime) {
+      requestData.send_time = sendTime;
+    }
   
-      console.log('Request Data:', JSON.stringify(requestData, null, 2));
+      // FormData에 'request' 키로 JSON 데이터 추가
+      formData.append('request', JSON.stringify(requestData));
+  
+      // 디버깅용 데이터 확인
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}: ${value}`);
+      }
   
       // API 요청 보내기
-      const response = await axios.post('https://dev.enble.site/api/messages/send', requestData, {
+      const response = await axios.post('https://dev.enble.site/api/messages/sms', formData, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          'Content-Type': 'application/json',
+          'Content-Type': 'multipart/form-data',
         },
       });
   
       console.log('Response Data:', response.data);
       alert('메시지가 성공적으로 발송되었습니다!');
     } catch (error) {
-      console.error('Error:', error);
-      alert('메시지 발송에 실패했습니다. 다시 시도해주세요.');
+      console.error('Error Response:', error.response?.data || error.message);
+      alert(`메시지 발송 실패: ${error.response?.data?.detail || '알 수 없는 오류입니다.'}`);
     }
   };
+  
+  
   
   const handleTempSave = async () => {
     const confirmSave = window.confirm('메시지를 임시 저장하시겠습니까?');
@@ -330,15 +359,19 @@ function MainPage() {
             onChange={(e) => setSendDate(new Date(e.target.value))}
             className="date"
           />
-          <select className="hour">
+          <select className="hour"
+          value={selectedHour}
+          onChange={(e) => setSelectedHour(e.target.value)}>
             {[...Array(24).keys()].map((hour) => (
               <option key={hour} value={hour}>
                 {hour}시
               </option>
             ))}
           </select>
-          <select className="minute">
-            {[0, 15, 30, 45].map((minute) => (
+          <select className="minute"
+          value={selectedMinute}
+          onChange={(e) => setSelectedMinute(e.target.value)}>
+            {Array.from({ length: 60 }, (_, minute) => (
               <option key={minute} value={minute}>
                 {minute}분
               </option>

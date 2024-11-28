@@ -114,7 +114,7 @@ function ChatbotPage() {
       <header>
         <div className="left-section">
           <img src={Group} alt="Group" className="Group" />
-          <h1 className="title" onClick={() => navigate('/mainpage')}>Pic&Talk</h1>
+          <h1 className="title" >Pic&Talk</h1>
           <img src={Bx_chat} alt="Bx_chat" className="Bx_chat" />
         </div>
 
