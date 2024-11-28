@@ -143,7 +143,7 @@ function ImagePage() {
       <header className={styles.header}>
         <div className={styles.leftSection}>
           <img src={Group} alt="Group" className={styles.group} />
-          <h1 className={styles.title}>Pic&Talk</h1>
+          <h1 className={styles.title} onClick={() => navigate('/mainpage')}>Pic&Talk</h1>
           <img src={Bx_chat} alt="Bx_chat" className={styles.bxChat} />
         </div>
         <div className={styles.centerSection}>

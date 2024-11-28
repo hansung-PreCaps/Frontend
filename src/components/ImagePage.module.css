@@ -28,6 +28,7 @@
   position: relative;
   margin-left: 3vw;
   top: -0.4vw;
+  cursor: pointer;
 }
 
 .group {

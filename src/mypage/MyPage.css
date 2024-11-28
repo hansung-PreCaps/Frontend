@@ -25,6 +25,7 @@
     font-size: 40px;
     margin-left: 40px;
     margin-top: -10px;
+    cursor: pointer;
   }
   
   .navbar-title {
