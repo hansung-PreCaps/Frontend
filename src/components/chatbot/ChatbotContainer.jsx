@@ -11,6 +11,7 @@ const ChatbotContainer = ({ messages }) => {
           message={message.text}
           isUser={message.isUser}
           timestamp={message.timestamp}
+          imageUrl={message.imageUrl}
         />
       ))}
     </div>
@@ -23,7 +24,8 @@ ChatbotContainer.propTypes = {
       id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
       text: PropTypes.string.isRequired,
       isUser: PropTypes.bool.isRequired,
-      timestamp: PropTypes.string.isRequired
+      timestamp: PropTypes.string.isRequired,
+      imageUrl: PropTypes.string
     })
   ).isRequired
 };
