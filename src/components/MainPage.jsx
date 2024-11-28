@@ -391,8 +391,8 @@ function MainPage() {
       <div>
         <label className="sending-setting">발송 설정</label>
         <div className="sending-options">
-        <button className={`immed-send ${!isScheduled ? 'activ' : ''}`} onClick={() => setIsScheduled(false)}>즉시 발송</button>
-        <button className={`reser-send ${isScheduled ? 'activ' : ''}`} onClick={() => setIsScheduled(true)}>예약 발송</button>
+        <button className="immed-send"  onClick={() => setIsScheduled(false)}>{!isScheduled ? '✔ 즉시 발송' : '즉시 발송'}</button>
+        <button className="reser-send"  onClick={() => setIsScheduled(true)}>{isScheduled ? '✔ 예약 발송' : '예약 발송'}</button>
         </div>
 
         {isScheduled && (
