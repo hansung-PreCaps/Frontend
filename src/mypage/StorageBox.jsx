@@ -8,13 +8,16 @@ function StorageBox() {
   const [error, setError] = useState(null); // 에러 상태
 
   // API 요청
-    const fetchMessages = async () => {
-      try {
-        const response = await axios.get('https://dev.enble.site/api/messages', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`, // 인증 토큰
-          },
-        });
+const fetchMessages = async () => {
+  try {
+    const response = await axios.get('https://dev.enble.site/api/messages', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`, // 인증 토큰
+      },
+      params: {
+        status: 'SENT', // 여기에 원하는 파라미터 추가
+      },
+    });
         if (response.data.isSuccess) {
           console.log(response.data.result);
           setMessages(response.data.result); // 메시지 데이터를 상태에 저장
