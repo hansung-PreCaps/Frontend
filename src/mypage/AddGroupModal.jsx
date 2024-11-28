@@ -8,23 +8,19 @@ function AddGroupModal({ onClose, onGroupAdded }) {
 
   const handleAddGroup = async () => {
     try {
-      const response = await axiosInstance.post("/api/groups", { group_name: groupName });
-      const newGroupId = response.data.id || `temp-${new Date().getTime()}`;
-      console.log("API 응답 ID:", response.data.id);
-
-      if (!response.data.id) {
-        console.warn("서버에서 유효한 ID를 반환하지 않았습니다. 임시 ID가 생성되었습니다.");
-      }
+      const response = await axiosInstance.post("/api/groups", { group_name: groupName }); // POST 요청
+      console.log("그룹 생성 성공:", response.data);
 
       onGroupAdded({
-        id: newGroupId,
-        name: groupName,
+        id: response.data.result.group_id, // 서버에서 반환된 ID
+        name: response.data.result.group_name,
         contacts: [],
       });
       alert("그룹이 성공적으로 추가되었습니다!");
       onClose();
     } catch (error) {
       console.error("그룹 생성 실패:", error.response || error.message);
+      alert("그룹 생성 중 오류가 발생했습니다.");
     }
   };
 
