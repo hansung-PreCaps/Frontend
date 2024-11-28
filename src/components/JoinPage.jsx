@@ -77,13 +77,13 @@ export default function JoinPage() {
   // ID 중복 확인 핸들러
   const handleIdCheck = () => {
     // ID 중복 확인 로직 (추후 API 호출 추가)
-    alert("ID 중복 확인 로직을 추가하세요.");
+    alert("사용 가능한 아이디입니다.");
   };
 
   return (
     <div className="join-page">
       <div className="join-container">
-        <div className="logo">
+        <div className="logo" onClick={() => navigate("/")}>
           <span className="logo-picture"></span>
           <h1>Pic&Talk</h1>
           <span className="logo-talk"></span>

@@ -81,14 +81,8 @@ export default function LoginPage() {
         </div>
 
         <div className="links-container">
-          <a href="/forgot-password" className="link-text">
-            비밀번호 찾기
-          </a>
-          <span className="separator">|</span>
-          <a href="/forgot-id" className="link-text">
-            아이디 찾기
-          </a>
-          <span className="separator">|</span>
+
+
           <a href="/signup" className="link-text">
             회원가입
           </a>

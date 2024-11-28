@@ -29,6 +29,7 @@ body {
   justify-content: center;
   align-items: center;
   margin-bottom: 2rem;
+  cursor: pointer;
 }
 
 .logo h1 {
@@ -100,6 +101,7 @@ body {
   cursor: pointer;
   font-size: 0.8rem;
   white-space: nowrap;
+  color:black;
 }
 
 .check-button:hover {
