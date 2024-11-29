@@ -154,7 +154,7 @@ function MainPage() {
         ],
         from: formattedFrom,
         subject: subject || '테스트',
-        message_type: 'LMS',
+        message_type: 'MMS',
         content: content || '메시지 내용이 없습니다.',
         status: status,
         ...(sendTime && { send_time: sendTime }),
