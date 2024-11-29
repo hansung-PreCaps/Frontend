@@ -60,7 +60,7 @@ export default function LoginPage() {
                 type="text"
                 name="id"
                 placeholder="아이디"
-                className="input-field"
+                className="inputField"
                 value={credentials.id}
                 onChange={handleInputChange}
               />
@@ -68,7 +68,7 @@ export default function LoginPage() {
                 type="password"
                 name="password"
                 placeholder="비밀번호"
-                className="input-field"
+                className="inputField"
                 value={credentials.password}
                 onChange={handleInputChange}
               />

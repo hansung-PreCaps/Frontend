@@ -64,15 +64,15 @@ body {
   flex-direction: column;
 }
 
-.input-fields {
+.inputFields {
   display: flex;
   flex-direction: column;
   gap: 0rem; 
 }
 
-.input-field {
+.inputField {
   height: 48px;
-  padding: 0 1.4rem;
+  padding: 0 0rem;
   border: 1px solid #879BB8;
   border-radius: 4px;
   font-size: 0.8rem;
